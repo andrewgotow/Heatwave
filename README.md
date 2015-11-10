@@ -1,4 +1,6 @@
 # Heatwave
+![](https://github.com/andrewgotow/Heatwave/blob/master/screenshots/flame_demo_gif.gif)
+
 Heatwave is a simple post-processing effect for the Unity game engine, designed to add small-scale distortion and refraction effects to your scenes. Using a two-camera system, distortions can be caused by particle effects, fullscreen overlays, GUI elements, and whatever else you might want!
 Heatwave is designed to be simple and efficient, sacrificing accuracy for incredible performance, and ease of use. Setup is automatic, and configuring your effects takes only a few minutes.
 
