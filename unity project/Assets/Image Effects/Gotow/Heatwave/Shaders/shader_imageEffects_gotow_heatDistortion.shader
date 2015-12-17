@@ -48,6 +48,16 @@ Shader "Hidden/ImageEffects/Gotow/HeatDistortion" {
 				float _Strength;
 
 				float4 frag(v2f_img IN) : COLOR {
+					// On non-GL when AA is used, the main texture and scene depth texture
+					// will come out in different vertical orientations.
+					// So flip sampling of the texture when that is the case (main texture
+					// texel size will have negative Y).
+
+					#if UNITY_UV_STARTS_AT_TOP
+					if (_MainTex_TexelSize.y < 0)
+					        IN.uv.y = 1-IN.uv.y;
+					#endif
+
 					float3 distortion_normal = normalize( tex2D( _DistortionTex, IN.uv ).rgb - float3(0.5,0.5,0.5) );
 					float2 uv_offset = refract( fixed3(0,0,1), distortion_normal, 1.0 ).xy * (0.01666) * _Strength;
 
