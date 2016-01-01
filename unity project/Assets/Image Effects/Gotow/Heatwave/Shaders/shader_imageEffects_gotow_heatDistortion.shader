@@ -54,8 +54,7 @@ Shader "Hidden/ImageEffects/Gotow/HeatDistortion" {
 					// texel size will have negative Y).
 					float2 distortionUv = IN.uv;
 					#if UNITY_UV_STARTS_AT_TOP
-					if (_MainTex_TexelSize.y < 0)
-					        distortionUv.y = 1-distortionUv.y;
+		        distortionUv.y = 1-distortionUv.y;
 					#endif
 
 					float3 distortion_normal = normalize( tex2D( _DistortionTex, distortionUv ).rgb - float3(0.5,0.5,0.5) );
