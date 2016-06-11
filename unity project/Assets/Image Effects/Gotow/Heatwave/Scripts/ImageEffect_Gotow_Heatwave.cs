@@ -106,7 +106,13 @@ public class ImageEffect_Gotow_Heatwave : MonoBehaviour {
 		_normalCamera = obj.AddComponent<Camera>();
 		// set its projection matrix to match that of our main camera. This way, we
 		// can always be sure that the cameras line up properly.
+		_normalCamera.depth = _camera.depth;
+		_normalCamera.renderingPath = _camera.renderingPath;
 		_normalCamera.projectionMatrix = _camera.projectionMatrix;
+		_normalCamera.fieldOfView = _camera.fieldOfView;
+		_normalCamera.orthographic = _camera.orthographic;
+		_normalCamera.orthographicSize = _camera.orthographicSize;
+
 		// Set the camera to clear to a normal-neutral background.
 		_normalCamera.clearFlags = CameraClearFlags.SolidColor;
 		_normalCamera.backgroundColor = new Color( 0.5f, 0.5f, 1.0f );
