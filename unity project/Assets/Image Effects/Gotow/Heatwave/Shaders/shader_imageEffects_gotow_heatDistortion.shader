@@ -53,10 +53,6 @@ Shader "Hidden/ImageEffects/Gotow/HeatDistortion" {
 					// So flip sampling of the texture when that is the case (main texture
 					// texel size will have negative Y).
 					float2 distortionUv = IN.uv;
-					#if UNITY_UV_STARTS_AT_TOP
-		        distortionUv.y = 1-distortionUv.y;
-					#endif
-
 					float3 distortion_normal = normalize( tex2D( _DistortionTex, distortionUv ).rgb - float3(0.5,0.5,0.5) );
 					float2 uv_offset = refract( fixed3(0,0,1), distortion_normal, 1.0 ).xy * (0.01666) * _Strength;
 
