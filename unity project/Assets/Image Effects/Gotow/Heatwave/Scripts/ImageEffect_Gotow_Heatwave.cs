@@ -52,6 +52,8 @@ public class ImageEffect_Gotow_Heatwave : MonoBehaviour {
 		// want to create a new one every time the game starts, because this could
 		// potentially be a costly operation.
 		GetOrCreateNormalCamera();
+		//Need to set the aspect ratio regardless of whether the normalCamera is created in the previous function or if it already existed
+		_normalCamera.aspect = _camera.aspect;
 
 		// Build a render texture for the normal map camera. This lets us change the
 		// resolution of our camera, and eliminate the unnecessary depth buffer, as
