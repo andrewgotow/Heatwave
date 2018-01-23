@@ -35,29 +35,28 @@ Shader "Hidden/ImageEffects/Gotow/HeatDistortion" {
 	}
 	SubShader {
 		ZTest Always Cull Off ZWrite Off Fog { Mode Off }
+		
 		Pass {
 			CGPROGRAM
 				#pragma vertex vert_img
 				#pragma fragment frag
 				#include "UnityCG.cginc"
 
-				sampler2D _MainTex;
-				float4 _MainTex_ST;
-
-				sampler2D _DistortionTex;
+				UNITY_DECLARE_SCREENSPACE_TEXTURE(_MainTex)
+				UNITY_DECLARE_SCREENSPACE_TEXTURE(_DistortionTex)
 				float _Strength;
 
 				float4 frag(v2f_img IN) : COLOR {
-					// On non-GL when AA is used, the main texture and scene depth texture
-					// will come out in different vertical orientations.
-					// So flip sampling of the texture when that is the case (main texture
-					// texel size will have negative Y).
-					float2 distortionUv = IN.uv;
-					float3 distortion_normal = normalize( tex2D( _DistortionTex, distortionUv ).rgb - float3(0.5,0.5,0.5) );
-					float2 uv_offset = refract( fixed3(0,0,1), distortion_normal, 1.0 ).xy * (0.01666) * _Strength;
+					float3 wNorm = UNITY_SAMPLE_SCREENSPACE_TEXTURE( _DistortionTex, IN.uv ).rgb * 2 - 1;
+					float3 vNorm = mul((float3x3)unity_WorldToCamera, wNorm);
+					
+					// The 100 is just to adjust the range to something more reasonable.
+					// This takes place in UV space, so a value of 1 will offset by the entire
+					// width of the display.
+					float scale = _Strength / 100;
+					float2 uv_offset = refract( float3(0,0,1), vNorm, 1.0 ).xy * scale;
 
-					half4 c = tex2D (_MainTex, IN.uv + uv_offset);
-					return c;
+					return UNITY_SAMPLE_SCREENSPACE_TEXTURE(_MainTex, IN.uv + uv_offset);
 				}
 			ENDCG
 		}

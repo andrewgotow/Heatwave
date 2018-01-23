@@ -25,7 +25,6 @@ using UnityEngine;
 [AddComponentMenu("Image Effects/Gotow/Heatwave")]
 public class ImageEffect_Gotow_Heatwave : MonoBehaviour {
 
-
 	// Keep a reference to the "primary" camera, that this image effect is being applied to.
 	public Camera camera;
 	
@@ -62,7 +61,8 @@ public class ImageEffect_Gotow_Heatwave : MonoBehaviour {
 		// potentially be a costly operation.
 		CreateNormalCamera();
 		
-		//Need to set the aspect ratio regardless of whether the normalCamera is created in the previous function or if it already existed
+		//Need to set the aspect ratio regardless of whether the normalCamera is created 
+		// in the previous function or if it already existed
 		_normalCamera.aspect = camera.aspect;
 
 		// Build a render texture for the normal map camera. This lets us change the
@@ -71,7 +71,7 @@ public class ImageEffect_Gotow_Heatwave : MonoBehaviour {
 		_normalCamera.targetTexture = new RenderTexture(
 			(int)_normalCamera.pixelWidth, 		// width
 			(int)_normalCamera.pixelHeight, 	// height
-			0, 																// depth
+			0,									// depth
 			RenderTextureFormat.ARGBHalf ); 	// format
 
 		// Construct the post-effect shader here. This will be used when the scene
@@ -120,13 +120,13 @@ public class ImageEffect_Gotow_Heatwave : MonoBehaviour {
 
 		// Set the camera to clear to a normal-neutral background.
 		_normalCamera.clearFlags = CameraClearFlags.SolidColor;
-		_normalCamera.backgroundColor = new Color( 0.5f, 0.5f, 1.0f );
+		_normalCamera.backgroundColor = new Color( 0.5f, 0.5f, 0.5f );
 		_normalCamera.cullingMask = normalMask;
 
 		// Lastly, set up the replacement shader. We want only our defining particle
 		// effects to render into the distortion normal buffer, everything else in the
 		// scene will use a depth-only shader, so that the particles can be occluded.
-		_normalCamera.SetReplacementShader( Shader.Find( "Hidden/ImageEffects/Gotow/DistortionMap" ), "RenderType" );
+		_normalCamera.SetReplacementShader( Shader.Find( "Hidden/ImageEffects/Gotow/DistortionMapReplacement" ), "RenderType" );
 	}
 
 	// Lastly, when the scene is rendered, assign the shader's strength property,
