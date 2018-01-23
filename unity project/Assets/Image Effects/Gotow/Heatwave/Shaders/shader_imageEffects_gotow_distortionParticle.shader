@@ -1,4 +1,6 @@
-﻿Shader "Image Effects/Heat Distortion/Distortion Source" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Image Effects/Heat Distortion/Distortion Source" {
 
 	// Copyright (c) 2015, Andrew Gotow.
 
@@ -72,7 +74,7 @@ Category {
 			v2f vert (appdata_t v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				#ifdef SOFTPARTICLES_ON
 				o.projPos = ComputeScreenPos (o.vertex);
 				COMPUTE_EYEDEPTH(o.projPos.z);

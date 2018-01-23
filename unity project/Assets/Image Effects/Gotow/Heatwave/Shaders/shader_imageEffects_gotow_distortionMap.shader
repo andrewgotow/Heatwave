@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Hidden/ImageEffects/Gotow/DistortionMap" {
 
 	// Copyright (c) 2015, Andrew Gotow.
@@ -51,7 +53,7 @@ SubShader {
 		v2f vert (appdata_base v)
 		{
 			v2f o;
-			o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.vertex = UnityObjectToClipPos(v.vertex);
 			return o;
 		}
 
@@ -103,7 +105,7 @@ SubShader {
 		 v2f vert (appdata v)
 		 {
 				 v2f o;
-				 o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				 o.pos = UnityObjectToClipPos (v.vertex);
 				 o.color = v.color;
 				 o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 
